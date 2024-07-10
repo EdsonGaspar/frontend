@@ -1,3 +1,3 @@
 export function App() {
-  return <h1>NLW JOURNEY</h1>;
+  return <h1 className="text-3xl font-bold underline">NLW JOURNEY</h1>;
 }
