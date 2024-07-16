@@ -1,3 +1,21 @@
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { CreateTripPage } from "./pages/create-trip";
+import { TripDetailsPage } from "./pages/trip-details";
+import ErrorTrip from "./pages/error-trip";
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <CreateTripPage />,
+  },
+  {
+    path: "/trips/:tripId",
+    element: <TripDetailsPage />,
+  },
+  {
+    path: "/trips/nofound",
+    element: <ErrorTrip />,
+  },
+]);
 export function App() {
-  return <h1 className="text-3xl font-bold underline">NLW JOURNEY</h1>;
+  return <RouterProvider router={router} />;
 }
