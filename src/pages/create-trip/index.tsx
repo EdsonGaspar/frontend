@@ -1,18 +1,10 @@
-import {
-  MapPin,
-  Calendar,
-  ArrowRight,
-  UserRoundPlus,
-  Settings2,
-  X,
-  Plus,
-  User,
-  Car,
-} from "lucide-react";
+import { ArrowRight, UserRoundPlus } from "lucide-react";
 import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { InvetGuestModal } from "./invet-guest-modal";
 import { ConfirmTripModal } from "./confirm-trip-modal";
+import { DestinationAndStepsDate } from "./steps/destination-and-steps-date";
+import { InviteGuestStep } from "./steps/inveti-guests-step";
 
 export function CreateTripPage() {
   const navigate = useNavigate();
@@ -72,7 +64,8 @@ export function CreateTripPage() {
     setEmailsToInvite(newEmailList);
   }
 
-  function createTrip() {
+  function createTrip(event: FormEvent<HTMLElement>) {
+    event.preventDefault();
     navigate("/trips/123");
   }
 
@@ -87,69 +80,17 @@ export function CreateTripPage() {
         </div>
 
         <div className="space-y-4">
-          <div className="h-16 px-4 bg-zinc-900 rounded-xl flex items-center gap-3">
-            <div className="flex items-center gap-2 flex-1">
-              <MapPin className="size-5 text-zinc-400" />
-              <input
-                disabled={isGuestInputOpen}
-                type="text"
-                placeholder="Para onde você vai?"
-                className="bg-transparent text-lg placeholder-zinc-400 outline-none flex-1"
-              />
-            </div>
-            <div className="flex items-center gap-2">
-              <Calendar className="size-5 text-zinc-400" />
-              <input
-                disabled={isGuestInputOpen}
-                type="text"
-                placeholder="Quando?"
-                className="bg-transparent text-lg placeholder-zinc-400 w-40 outline-none"
-              />
-            </div>
-            {isGuestInputOpen ? (
-              <button
-                onClick={closeGuestInput}
-                className="bg-zinc-800 text-zinc-200 rounded-lg px-5 py-2 font-medium flex items-center gap-2 hover:bg-zinc-700 ml-8"
-              >
-                Alterar local/data
-                <Settings2 className="size-5" />
-              </button>
-            ) : (
-              <button
-                onClick={openGuestInput}
-                className="bg-lime-300 text-lime-950 rounded-lg px-5 py-2 font-medium flex items-center gap-2 hover:bg-lime-400 ml-8"
-              >
-                Continuar
-                <ArrowRight className="size-5 text-lime-950" />
-              </button>
-            )}
-          </div>
+          <DestinationAndStepsDate
+            closeGuestInput={closeGuestInput}
+            isGuestInputOpen={isGuestInputOpen}
+            openGuestInput={openGuestInput}
+          />
           {isGuestInputOpen ? (
-            <div className="h-16 px-4 bg-zinc-900 rounded-xl flex items-center gap-3">
-              <button
-                type="button"
-                onClick={openIsGuestModalOpen}
-                className="flex items-center gap-2 flex-1"
-              >
-                <UserRoundPlus className="size-5 text-zinc-400" />
-                {emailsToInvite.length > 0 ? (
-                  <span className="text-zinc-100 text-lg flex-1 text-left">
-                    {emailsToInvite.length} Pessao(s) convidada(s)
-                  </span>
-                ) : (
-                  <span className="text-zinc-400 text-lg flex-1 text-left">
-                    Quem estará na viagem
-                  </span>
-                )}
-              </button>
-              <button
-                onClick={openCornformTripModal}
-                className="bg-lime-300 text-lime-950 rounded-lg px-5 py-2 font-medium flex items-center gap-2 hover:bg-lime-400 ml-8"
-              >
-                Confirmar viagem
-                <ArrowRight className="size-5 text-lime-950" />
-              </button>
-            </div>
+            <InviteGuestStep
+              emailsToInvite={emailsToInvite}
+              openCornformTripModal={openCornformTripModal}
+              openIsGuestModalOpen={openIsGuestModalOpen}
+            />
           ) : null}
         </div>
 
@@ -177,7 +118,6 @@ export function CreateTripPage() {
 
       {isConformTripModalOpen && (
         <ConfirmTripModal
-          addNewEmailToInvite={addNewEmailToInvite}
           closeConformTripModal={closeConformTripModal}
           createTrip={createTrip}
         />

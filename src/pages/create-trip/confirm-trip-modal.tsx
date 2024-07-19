@@ -2,12 +2,10 @@ import { Plus, User, X } from "lucide-react";
 import { FormEvent } from "react";
 interface ConfirmTripModalProps {
   closeConformTripModal: () => void;
-  addNewEmailToInvite: (event: FormEvent<HTMLFormElement>) => void;
   createTrip: () => void;
 }
 
 export function ConfirmTripModal({
-  addNewEmailToInvite,
   closeConformTripModal,
   createTrip,
 }: ConfirmTripModalProps) {
@@ -34,7 +32,7 @@ export function ConfirmTripModal({
           </p>
         </div>
 
-        <form onSubmit={addNewEmailToInvite} className="space-y-3">
+        <form onSubmit={createTrip} className="space-y-3">
           <div className="h-14 px-4 bg-zinc-950 border border-zinc-800 rounded-lg flex items-center gap-2">
             <User className="text-zinc-400 size-5" />
             <input
@@ -53,7 +51,6 @@ export function ConfirmTripModal({
           </div>
 
           <button
-            onClick={createTrip}
             type="submit"
             className="bg-lime-300 w-full justify-center text-lime-950 rounded-lg px-5 h-11 font-medium flex items-center gap-2 hover:bg-lime-400 "
           >
